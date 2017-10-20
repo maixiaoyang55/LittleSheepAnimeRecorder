@@ -4,6 +4,7 @@ import com.maixiaoyang.animerecorder.DAO.Dao;
 import com.maixiaoyang.animerecorder.DAO.model.TbAnimationInfo;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
@@ -25,6 +26,8 @@ public class EntryPanel extends JPanel implements ActionListener, DocumentListen
     private JTextField animeAmount;
     private JButton plusButton;
     private JTextField watchedDate;
+    private final static Color BUTTON_FOREGROUND = Color.WHITE;
+    private final static Font ANIMENAME_FONT = new Font("楷体", Font.BOLD, 22);
     private int id;
 
     public EntryPanel() {
@@ -42,7 +45,7 @@ public class EntryPanel extends JPanel implements ActionListener, DocumentListen
         animeName = new JTextField(23);
         animeName.setHorizontalAlignment(JTextField.CENTER);
         animeName.getDocument().addDocumentListener(this);
-        animeName.setFont(f);
+        animeName.setFont(ANIMENAME_FONT);
         add(animeName);
 
         animeAmount = new JTextField("0", 3);
@@ -58,14 +61,14 @@ public class EntryPanel extends JPanel implements ActionListener, DocumentListen
         add(watchedDate);
 
         subButton = new MyButton("-", false);
-        subButton.setForeground(Color.BLACK);
+        subButton.setForeground(BUTTON_FOREGROUND);
         subButton.setFont(f);
         subButton.setActionCommand("subButton");
         subButton.addActionListener(this);
         add(subButton);
 
         plusButton = new MyButton("+", false);
-        plusButton.setForeground(Color.BLACK);
+        plusButton.setForeground(BUTTON_FOREGROUND);
         plusButton.setFont(f);
         plusButton.setActionCommand("plusButton");
         plusButton.addActionListener(this);
@@ -88,7 +91,7 @@ public class EntryPanel extends JPanel implements ActionListener, DocumentListen
         animeName = new JTextField(23);
         animeName.setHorizontalAlignment(JTextField.CENTER);
         animeName.getDocument().addDocumentListener(this);
-        animeName.setFont(f);
+        animeName.setFont(ANIMENAME_FONT);
         add(animeName);
 
         animeAmount = new JTextField("0", 3);
@@ -104,14 +107,14 @@ public class EntryPanel extends JPanel implements ActionListener, DocumentListen
         add(watchedDate);
 
         subButton = new MyButton("-", false);
-        subButton.setForeground(Color.BLACK);
+        subButton.setForeground(BUTTON_FOREGROUND);
         subButton.setFont(f);
         subButton.setActionCommand("subButton");
         subButton.addActionListener(this);
         add(subButton);
 
         plusButton = new MyButton("+", false);
-        plusButton.setForeground(Color.BLACK);
+        plusButton.setForeground(BUTTON_FOREGROUND);
         plusButton.setFont(f);
         plusButton.setActionCommand("plusButton");
         plusButton.addActionListener(this);
@@ -136,7 +139,7 @@ public class EntryPanel extends JPanel implements ActionListener, DocumentListen
         animeName = new JTextField(23);
         animeName.setHorizontalAlignment(JTextField.CENTER);
         animeName.getDocument().addDocumentListener(this);
-        animeName.setFont(f);
+        animeName.setFont(ANIMENAME_FONT);
         add(animeName);
 
         animeAmount = new JTextField("0", 3);
@@ -152,14 +155,14 @@ public class EntryPanel extends JPanel implements ActionListener, DocumentListen
         add(watchedDate);
 
         subButton = new MyButton("-", false);
-        subButton.setForeground(Color.BLACK);
+        subButton.setForeground(BUTTON_FOREGROUND);
         subButton.setFont(f);
         subButton.setActionCommand("subButton");
         subButton.addActionListener(this);
         add(subButton);
 
         plusButton = new MyButton("+", false);
-        plusButton.setForeground(Color.BLACK);
+        plusButton.setForeground(BUTTON_FOREGROUND);
         plusButton.setFont(f);
         plusButton.setActionCommand("plusButton");
         plusButton.addActionListener(this);
@@ -184,7 +187,7 @@ public class EntryPanel extends JPanel implements ActionListener, DocumentListen
         animeName = new JTextField(23);
         animeName.setHorizontalAlignment(JTextField.CENTER);
         animeName.getDocument().addDocumentListener(this);
-        animeName.setFont(f);
+        animeName.setFont(ANIMENAME_FONT);
         add(animeName);
 
         animeAmount = new JTextField("0", 3);
@@ -200,14 +203,14 @@ public class EntryPanel extends JPanel implements ActionListener, DocumentListen
         add(watchedDate);
 
         subButton = new MyButton("-", false);
-        subButton.setForeground(Color.BLACK);
+        subButton.setForeground(BUTTON_FOREGROUND);
         subButton.setFont(f);
         subButton.setActionCommand("subButton");
         subButton.addActionListener(this);
         add(subButton);
 
         plusButton = new MyButton("+", false);
-        plusButton.setForeground(Color.BLACK);
+        plusButton.setForeground(BUTTON_FOREGROUND);
         plusButton.setFont(f);
         plusButton.setActionCommand("plusButton");
         plusButton.addActionListener(this);
@@ -237,7 +240,8 @@ public class EntryPanel extends JPanel implements ActionListener, DocumentListen
         animeName.setHorizontalAlignment(JTextField.CENTER);
         animeName.setEditable(true);
         animeName.getDocument().addDocumentListener(this);
-        animeName.setFont(f);
+        animeName.setFont(ANIMENAME_FONT);
+        animeName.setBorder(new EmptyBorder(0, 0, 0, 0));
         add(animeName);
 
         animeAmount = new JTextField(amount, 3);
@@ -253,14 +257,14 @@ public class EntryPanel extends JPanel implements ActionListener, DocumentListen
         add(watchedDate);
 
         subButton = new MyButton("-", false);
-        subButton.setForeground(Color.BLACK);
+        subButton.setForeground(BUTTON_FOREGROUND);
         subButton.setFont(f);
         subButton.setActionCommand("subButton");
         subButton.addActionListener(this);
         add(subButton);
 
         plusButton = new MyButton("+", false);
-        plusButton.setForeground(Color.BLACK);
+        plusButton.setForeground(BUTTON_FOREGROUND);
         plusButton.setFont(f);
         plusButton.setActionCommand("plusButton");
         plusButton.addActionListener(this);

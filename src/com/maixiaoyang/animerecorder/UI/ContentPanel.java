@@ -27,6 +27,7 @@ public class ContentPanel extends JPanel {
     public ContentPanel() {
         instance = this;
         setLayout(null);
+        setOpaque(false);
         /*
         * 当ContentPanel添加组件至超出范围时，使scrollPane有效，必须使用setPreferredSize()，而是不是setSize()，并且
         * 内容面板大于滚动面板时就会出现滚动条（当scrollPane设置成需要时出现滚动条）。
@@ -36,14 +37,16 @@ public class ContentPanel extends JPanel {
         setPreferredSize(new Dimension(775,610));  //初始height:610 + 50
 
         scrollPane = new JScrollPane(this);
-        scrollPane.setBounds(310, 100, 775, 615);
+        scrollPane.setOpaque(false);
+        scrollPane.getViewport().setOpaque(false);
+        scrollPane.setBounds(310, 120, 775, 615);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setHorizontalScrollBarPolicy(scrollPane.HORIZONTAL_SCROLLBAR_NEVER);
     }
 
     public static void setAddAnimeButton() {
         addAnimeButton = new MyButton("+", false);
-        addAnimeButton.setForeground(Color.BLACK);
+        addAnimeButton.setForeground(Color.WHITE);
         addAnimeButton.setBounds(10, animationInfoSize * 50 + 10, 100, 40);
         addAnimeButton.setFont(new Font("楷体", Font.BOLD, 25));
         addAnimeButton.addActionListener(e -> {

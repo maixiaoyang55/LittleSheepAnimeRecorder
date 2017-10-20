@@ -37,7 +37,7 @@ public class WeekButtonPanel extends JPanel implements ActionListener {
         //setLayout(new FlowLayout(0)); //设置布局管理器为流布局管理器
         setLayout(new GridLayout(1, 8));
         setSize(100, 100);
-        setBounds(310, 30, 780, 60);
+        setBounds(310, 50, 780, 60);
 
         Font f = new Font("宋体", Font.BOLD, 20);
 
