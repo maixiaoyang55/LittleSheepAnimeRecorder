@@ -1,6 +1,6 @@
-package com.maixiaoyang.animerecorder.UI;
+package com.maixiaoyang.animerecorder.ui;
 
-import com.maixiaoyang.animerecorder.DAO.Dao;
+import com.maixiaoyang.animerecorder.dao.Dao;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -8,7 +8,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.net.URL;
 
-import static com.maixiaoyang.animerecorder.DAO.Dao.loadAnimation;
 
 /**
  * 小肥羊追番神器主要视图框架
@@ -23,8 +22,9 @@ public class MainUI extends JFrame {
     private int mouseX, mouseY;
     private int frameX, frameY;
     private int screenWidth, screenHeight;
-    private ContentPanel contentPanel;
     private WeekButtonPanel weekButtonPanel;
+
+    private static JFrame instance;
 
     private void getScreenSize() {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -34,30 +34,44 @@ public class MainUI extends JFrame {
 
     public MainUI() {
         Container c = getContentPane();
-        setResizable(false); //禁止用户自由改变窗口大小
-        setLayout(null); //设置布局为空，此时任意组件、面板可以随意大小、位置放置。
+        //禁止用户自由改变窗口大小
+        setResizable(false);
+        //设置布局为空，此时任意组件、面板可以随意大小、位置放置。
+        setLayout(null);
 
         /*************************设置初始位置为屏幕正中心*************************/
         getScreenSize();
         setLocation(screenWidth / 2 - WIDTH / 2, screenHeight / 2 - HEIGHT / 2);
         /***********************************************************************/
 
-        setUndecorated(true); //禁止此Jframe的装饰，即将边框和标题栏隐藏
-        setSize(WIDTH, HEIGHT); //设置窗口的大小
-        setBackground(new Color(0, 0, 0, 100)); //设置窗口的背景
+        instance = this;
+
+        //禁止此Jframe的装饰，即将边框和标题栏隐藏
+        setUndecorated(true);
+        //设置窗口的大小
+        setSize(WIDTH, HEIGHT);
+        //设置窗口的背景
+        setBackground(new Color(0, 0, 0, 100));
+        //鼠标拖拽方法
         addMouseMotionListener(new MouseMotionAdapter() { //设置鼠标运动监听器
             @Override
-            public void mouseDragged(MouseEvent e) { //鼠标拖拽方法
-                setLocation(frameX + (e.getXOnScreen() - mouseX), frameY + (e.getYOnScreen() - mouseY)); //设置窗口的当前位置
+            public void mouseDragged(MouseEvent e) {
+                //设置窗口的当前位置
+                setLocation(frameX + (e.getXOnScreen() - mouseX), frameY + (e.getYOnScreen() - mouseY));
             }
         });
+        //鼠标按下方法
         addMouseListener(new MouseAdapter() { //设置鼠标监听器
             @Override
-            public void mousePressed(MouseEvent e) { //鼠标按下方法
-                mouseX = e.getXOnScreen(); //获取鼠标在屏幕上的x坐标
-                mouseY = e.getYOnScreen(); //获取鼠标在屏幕上的y坐标
-                frameX = getX(); //获取窗口的x坐标
-                frameY = getY(); //获取窗口的y坐标
+            public void mousePressed(MouseEvent e) {
+                //获取鼠标在屏幕上的x坐标
+                mouseX = e.getXOnScreen();
+                //获取鼠标在屏幕上的y坐标
+                mouseY = e.getYOnScreen();
+                //获取窗口的x坐标
+                frameX = getX();
+                //获取窗口的y坐标
+                frameY = getY();
 
             }
         });
@@ -67,9 +81,8 @@ public class MainUI extends JFrame {
 
         weekButtonPanel.setFocusable(true);
         weekButtonPanel.requestFocus();
-
-        contentPanel = new ContentPanel();
-        c.add(contentPanel.getPanel());
+        new ContentPanel();
+        c.add(ContentPanel.getPanel());
     }
 
     public static void main(String[] args) {
@@ -82,7 +95,12 @@ public class MainUI extends JFrame {
     public void init() {
         addCloseButton();
         addMiniButton();
-        loadAnimation();
+        addTrashIcon();
+        Dao.loadAnimation();
+    }
+
+    public static JFrame getFrame() {
+        return instance;
     }
 
     public void addMiniButton(){
@@ -111,17 +129,32 @@ public class MainUI extends JFrame {
         add(closeButton);
     }
 
+    public void addTrashIcon() {
+        JLabel trashIcon = new JLabel();
+        URL imgUrl = MainUI.class.getResource("images/trash_icon.png");
+        ImageIcon icon = new ImageIcon(imgUrl);
+        trashIcon.setIcon(icon);
+        trashIcon.setBounds(310, 13, 30, 30);
+        add(trashIcon);
+    }
+
+    @Override
     public void paint(Graphics g) {
         super.paint(g);
         Graphics2D g2 = (Graphics2D) g;
 
         URL imgUrl = MainUI.class.getResource("images/bg01.png");
-        img = Toolkit.getDefaultToolkit().getImage(imgUrl); //获取图片路径
-        g2.drawImage(img, 0, 0, this); //绘制图片
+        //获取图片路径
+        img = Toolkit.getDefaultToolkit().getImage(imgUrl);
+        //绘制图片
+        g2.drawImage(img, 0, 0, this);
 
-        g2.setColor(Color.LIGHT_GRAY); //设置画笔颜色
-        g2.setStroke(new BasicStroke(5.0f)); //设置画笔属性（宽度）
-        g2.drawRoundRect(300, 5, 795, 740, 10, 10); //绘制圆角矩阵
+        //设置画笔颜色
+        g2.setColor(Color.LIGHT_GRAY);
+        //设置画笔属性（宽度）
+        g2.setStroke(new BasicStroke(5.0f));
+        //绘制圆角矩阵
+        g2.drawRoundRect(300, 5, 795, 740, 10, 10);
 
         g2.dispose();
     }

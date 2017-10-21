@@ -1,4 +1,4 @@
-package com.maixiaoyang.animerecorder.ConnDB;
+package com.maixiaoyang.animerecorder.conndb;
 
 import java.sql.*;
 
@@ -8,10 +8,14 @@ import java.sql.*;
  */
 public class ConnDB {
 
-    private static String dbClassName = "com.mysql.jdbc.Driver"; //数据库驱动
-    private static String dbUrl = "jdbc:mysql://localhost:3306/anime_record?useUnicode=true&characterEncoding=GBK"; //访问MySQL数据库的路径
-    private static String dbUser = "root"; //访问MySQL数据库的用户名
-    private static String dbPwd = ""; //访问MySQL数据库的密码
+    /** 数据库驱动 */
+    private static String dbClassName = "com.mysql.jdbc.Driver";
+    /** 访问MySQL数据库的路径 */
+    private static String dbUrl = "jdbc:mysql://localhost:3306/anime_record?useUnicode=true&characterEncoding=GBK";
+    /** 访问MySQL数据库的用户名 */
+    private static String dbUser = "root";
+    /** 访问MySQL数据库的密码 */
+    private static String dbPwd = "";
     public static Connection connection = null;
     public static Statement statement = null;
     public static ResultSet resultSet = null;
@@ -22,8 +26,10 @@ public class ConnDB {
     public static Connection getConnection() {
         Connection connection = null;
         try {
-            Class.forName(dbClassName).newInstance(); //加载数据库驱动，注册到驱动管理器
-            connection = DriverManager.getConnection(dbUrl, dbUser, dbPwd); //创建数据库连接
+            //加载数据库驱动，注册到驱动管理器
+            Class.forName(dbClassName).newInstance();
+            //创建数据库连接
+            connection = DriverManager.getConnection(dbUrl, dbUser, dbPwd);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {
@@ -79,6 +85,7 @@ public class ConnDB {
 
     /***
      *更新对象表格数据
+     * @param sql：用于指定更新语句
      */
     public static void execute(String sql) {
         try {
@@ -92,7 +99,7 @@ public class ConnDB {
     }
 
     /**
-	 * 功能:关闭数据库的连接
+	 * 关闭数据库的连接
 	 */
     public static void close() {
         try {

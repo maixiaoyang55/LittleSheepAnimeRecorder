@@ -1,10 +1,10 @@
-package com.maixiaoyang.animerecorder.DAO;
+package com.maixiaoyang.animerecorder.dao;
 
-import com.maixiaoyang.animerecorder.ConnDB.ConnDB;
-import com.maixiaoyang.animerecorder.DAO.model.TbAnimationInfo;
-import com.maixiaoyang.animerecorder.UI.ContentPanel;
-import com.maixiaoyang.animerecorder.UI.EntryPanel;
-import com.maixiaoyang.animerecorder.UI.WeekButtonPanel;
+import com.maixiaoyang.animerecorder.conndb.ConnDB;
+import com.maixiaoyang.animerecorder.dao.model.TbAnimationInfo;
+import com.maixiaoyang.animerecorder.ui.ContentPanel;
+import com.maixiaoyang.animerecorder.ui.EntryPanel;
+import com.maixiaoyang.animerecorder.ui.WeekButtonPanel;
 
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -75,7 +75,8 @@ public class Dao {
             int colCount = metaData.getColumnCount();
             while (resultSet.next()) {
                 List<String> row = new ArrayList<>();
-                for (int i = 1; i <= colCount; i++) { //注意这里i是从1开始而不是0！
+                //注意这里i是从1开始而不是0！
+                for (int i = 1; i <= colCount; i++) {
                     String str = resultSet.getString(i);
                     if (str != null && !str.isEmpty()) {
                         str = str.trim();
@@ -113,16 +114,27 @@ public class Dao {
         ConnDB.close();
     }
 
-    public static void addAnimationInfo(int animationSzie, String date) {
+    public static void addAnimationForWatched(String animeName, String number, String date) {
+        String sql = "insert into " + tableName[WATCHED] + "(name,number,date) values('" + animeName + "','" + number +"','" + date + "')";
+        ConnDB.executeUpdate(sql);
+        ConnDB.close();
+    }
+
+    public static void addAnimationInfo(int animationSzie, String animeName, String date) {
         int id = animationSzie + 1;
-        String sql = "insert into " + tableName[WeekButtonPanel.weekDaySelected] + "(id,name,number,date) values(" + id + ",'','0','" + date + "')";
-        int result = ConnDB.executeUpdate(sql);
+        String sql = "insert into " + tableName[WeekButtonPanel.weekDaySelected] + "(id,name,number,date) values(" + id + ",'" + animeName + "','0','" + date + "')";
+        ConnDB.executeUpdate(sql);
     }
 
     public static void updateAnimationInfo(String columName, String animationName, int id) {
         String sql = "update " + tableName[WeekButtonPanel.weekDaySelected] + " set " + columName + "=\"" + animationName + "\" where id=" + id;
-        System.out.println(sql);
         ConnDB.execute(sql);
+    }
+
+    public static void deleteAnimationInfo(int id) {
+        String sql = "delete from " + tableName[WeekButtonPanel.weekDaySelected] + " where id=" + id;
+        ConnDB.executeUpdate(sql);
+        ConnDB.close();
     }
 
     /**

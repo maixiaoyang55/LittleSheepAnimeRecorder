@@ -1,4 +1,4 @@
-package com.maixiaoyang.animerecorder.DAO.model;
+package com.maixiaoyang.animerecorder.dao.model;
 
 import java.io.Serializable;
 
@@ -6,20 +6,26 @@ import java.io.Serializable;
  * 小肥羊追番神器动漫数据模型
  * @author maixiaoyang
  */
-public class TbAnimationInfo implements Serializable {  //实现序列化接口
+public class TbAnimationInfo implements Serializable {
 
-    private String id;        //番剧编号
-    private String name;      //番剧名字
-    private String amount;    //观看集数
-    private String date;      //观看日期
+    /** 番剧编号 */
+    private String id;
+    /** 番剧名字 */
+    private String name;
+    /** 观看集数 */
+    private String amount;
+    /** 观看日期 */
+    private String date;
 
-    public TbAnimationInfo() {}   //缺省构造函数
+    /** 缺省构造函数 */
+    public TbAnimationInfo() {}
 
     public TbAnimationInfo(String id) {  //最小构造函数（主键）
         this.id = id;
     }
 
-    public TbAnimationInfo(String id, String name, String amount, String date) {  //完整构造函数
+    /** 完整构造函数 */
+    public TbAnimationInfo(String id, String name, String amount, String date) {
         this.id = id;
         this.name = name;
         this.amount = amount;

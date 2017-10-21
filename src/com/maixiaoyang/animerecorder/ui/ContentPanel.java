@@ -1,12 +1,9 @@
-package com.maixiaoyang.animerecorder.UI;
+package com.maixiaoyang.animerecorder.ui;
 
-import com.maixiaoyang.animerecorder.DAO.Dao;
-import com.maixiaoyang.animerecorder.DAO.model.TbAnimationInfo;
+import com.maixiaoyang.animerecorder.dao.model.TbAnimationInfo;
 
 import javax.swing.*;
 import java.awt.*;
-import java.text.DateFormat;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -15,14 +12,12 @@ import java.util.List;
  */
 public class ContentPanel extends JPanel {
 
-    private JScrollPane scrollPane  = null;
+    private static JScrollPane scrollPane  = null;
     private static MyButton addAnimeButton;
     private static ContentPanel instance;
-    private static int entryNum = 0;
-
-    /***测试用变量****/
     private static int animationInfoSize = 0;
-    /***************/
+    private final static int MAX_ENTRY_NUM = 12;
+
 
     public ContentPanel() {
         instance = this;
@@ -34,14 +29,15 @@ public class ContentPanel extends JPanel {
         * 因此，当添加组件超出范围时，需要更新ContentPanel的大小来适应滚动面板。
         * 这里ContentPanel最多添加12个EntryPanel就会超出范围
         * */
-        setPreferredSize(new Dimension(775,610));  //初始height:610 + 50
+        //初始height:610 + 50
+        setPreferredSize(new Dimension(775,610));
 
         scrollPane = new JScrollPane(this);
         scrollPane.setOpaque(false);
         scrollPane.getViewport().setOpaque(false);
         scrollPane.setBounds(310, 120, 775, 615);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        scrollPane.setHorizontalScrollBarPolicy(scrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
     }
 
     public static void setAddAnimeButton() {
@@ -49,24 +45,20 @@ public class ContentPanel extends JPanel {
         addAnimeButton.setForeground(Color.WHITE);
         addAnimeButton.setBounds(10, animationInfoSize * 50 + 10, 100, 40);
         addAnimeButton.setFont(new Font("楷体", Font.BOLD, 25));
-        addAnimeButton.addActionListener(e -> {
-            addAnimeButton.setBounds(5, (animationInfoSize + 1) * 50 + 10, 100, 40);
-
-            Date date = new Date();
-            DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM);
-            ContentPanel.instance.add(new EntryPanel(animationInfoSize + 1, dateFormat.format(date), 10, animationInfoSize * 50 + 10));
-            Dao.addAnimationInfo(animationInfoSize, dateFormat.format(date));
-
-            if (animationInfoSize > 10) {
-                ContentPanel.instance.setPreferredSize(new Dimension(775, 610 + (animationInfoSize - 10) * 50));
-            }
-
-            animationInfoSize++;
-
-            ContentPanel.instance.revalidate(); //使组件失效，并重新计算布局绘制组件
-        });
+        addAnimeButton.addActionListener(e -> new MyDialog(MainUI.getFrame(), MyDialog.TYPE_ONE).setVisible(true));
         ContentPanel.instance.add(addAnimeButton);
+    }
 
+    public static MyButton getAddAnimeButton() {
+        return addAnimeButton;
+    }
+
+    public static int getAnimationInfoSize() {
+        return animationInfoSize;
+    }
+
+    public static void setAnimationInfoSize(int animationInfoSize) {
+        ContentPanel.animationInfoSize = animationInfoSize;
     }
 
     /**
@@ -75,15 +67,14 @@ public class ContentPanel extends JPanel {
      * */
     public void addEntry(List<TbAnimationInfo> animationInfoList) {
         TbAnimationInfo animationInfo = new TbAnimationInfo();
-        entryNum = animationInfoList.size();
-        animationInfoSize = entryNum;
+        animationInfoSize = animationInfoList.size();
         for (int i = 0; i < animationInfoList.size(); i++) {
             animationInfo = animationInfoList.get(i);
             EntryPanel entryPanel = new EntryPanel(animationInfo);
             add(entryPanel);
         }
         try {
-            if (animationInfo != null && Integer.parseInt(animationInfo.getId()) > 12) {
+            if (animationInfo != null && Integer.parseInt(animationInfo.getId()) > MAX_ENTRY_NUM) {
                 setPreferredSize(new Dimension(775, 610 + (Integer.parseInt(animationInfo.getId()) - 12) * 50));
             } else {
                 setPreferredSize(new Dimension(775,610));
@@ -101,7 +92,7 @@ public class ContentPanel extends JPanel {
             add(entryPanel);
         }
         try {
-            if (animationInfo != null && Integer.parseInt(animationInfo.getId()) > 12) {
+            if (animationInfo != null && Integer.parseInt(animationInfo.getId()) > MAX_ENTRY_NUM) {
                 setPreferredSize(new Dimension(775, 610 + (Integer.parseInt(animationInfo.getId()) - 12) * 50));
             } else {
                 setPreferredSize(new Dimension(775,610));
@@ -111,7 +102,7 @@ public class ContentPanel extends JPanel {
         }
     }
 
-    public JScrollPane getPanel() {
+    public static JScrollPane getPanel() {
         return scrollPane ;
     }
 
