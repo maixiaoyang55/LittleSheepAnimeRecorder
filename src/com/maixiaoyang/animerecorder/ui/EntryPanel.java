@@ -7,6 +7,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.net.URL;
+import java.text.DateFormat;
+import java.util.Date;
 
 /**
  * 小肥羊追番神器番剧条目面板
@@ -52,6 +54,7 @@ public class EntryPanel extends JPanel implements ActionListener {
         addSubButton();
         addPlusButton();
         addDeleteIcon();
+        addCompleteIcon();
     }
 
     public EntryPanel(TbAnimationInfo animationInfo) {
@@ -232,10 +235,18 @@ public class EntryPanel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (COMMAND_SUB_BUTTON.equals(e.getActionCommand())) {
             animeAmount.setText(String.valueOf(Integer.parseInt(animeAmount.getText()) - 1));
+            Date date = new Date();
+            DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM);
+            watchedDate.setText(df.format(date));
             Dao.updateAnimationInfo("number", animeAmount.getText(), id);
+            Dao.updateAnimationInfo("date", watchedDate.getText(), id);
         } else if (COMMAND_PLUS_BUTTON.equals(e.getActionCommand())) {
             animeAmount.setText(String.valueOf(Integer.parseInt(animeAmount.getText()) + 1));
+            Date date = new Date();
+            DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM);
+            watchedDate.setText(df.format(date));
             Dao.updateAnimationInfo("number", animeAmount.getText(), id);
+            Dao.updateAnimationInfo("date", watchedDate.getText(), id);
         }
     }
 

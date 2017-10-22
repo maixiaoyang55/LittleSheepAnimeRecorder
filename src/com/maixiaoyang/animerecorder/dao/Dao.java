@@ -143,7 +143,7 @@ public class Dao {
      * */
     public static int dayOfWeek() {
         if (Calendar.getInstance().get(Calendar.DAY_OF_WEEK) == 1) {
-            return 7;
+            return 6;
         } else {
             return  Calendar.getInstance().get(Calendar.DAY_OF_WEEK) - 2;
         }

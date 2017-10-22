@@ -83,6 +83,22 @@ public class MyDialog extends JDialog implements ActionListener {
         add(cancelButton);
     }
 
+    private void deleteEntry() {
+        int animationInfoSize = ContentPanel.getAnimationInfoSize();
+        int id = EntryPanel.getId(EntryPanel.instance);
+        Dao.deleteAnimationInfo(id);
+        ContentPanel.clear();
+        animationInfoSize--;
+        for (int i = id; i <= animationInfoSize; i++) {
+            Dao.updateAnimationInfo("id", String.valueOf(i), i + 1);
+        }
+
+        Dao.loadAnimation(WeekButtonPanel.weekDaySelected);
+
+        ContentPanel.setAnimationInfoSize(animationInfoSize);
+        ContentPanel.getContentPanel().revalidate(); //使组件失效，并重新计算布局绘制组件
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (COMMAND_COMFIRM_ADD_BUTTON.equals(e.getActionCommand())) {
@@ -107,33 +123,10 @@ public class MyDialog extends JDialog implements ActionListener {
 
             dispose();
         } else if (COMMAND_COMFIRM_DELETE_BUTTON.equals(e.getActionCommand())) {
-            int animationInfoSize = ContentPanel.getAnimationInfoSize();
-            int id = EntryPanel.getId(EntryPanel.instance);
-            Dao.deleteAnimationInfo(id);
-            ContentPanel.clear();
-            animationInfoSize--;
-            for (int i = id; i <= animationInfoSize; i++) {
-                Dao.updateAnimationInfo("id", String.valueOf(i), i + 1);
-            }
-
-            Dao.loadAnimation(WeekButtonPanel.weekDaySelected);
-
-            ContentPanel.setAnimationInfoSize(animationInfoSize);
-            ContentPanel.getContentPanel().revalidate(); //使组件失效，并重新计算布局绘制组件
+            deleteEntry();
             dispose();
         } else if (COMMAND_COMFIRM_COMPLETE_BUTTON.equals(e.getActionCommand())) {
-            int animationInfoSize = ContentPanel.getAnimationInfoSize();
-            int id = EntryPanel.getId(EntryPanel.instance);
-            Dao.deleteAnimationInfo(id);
-            ContentPanel.clear();
-            animationInfoSize--;
-            for (int i = id; i <= animationInfoSize; i++) {
-                Dao.updateAnimationInfo("id", String.valueOf(i), i + 1);
-            }
-
-            Dao.loadAnimation(WeekButtonPanel.weekDaySelected);
-            ContentPanel.setAnimationInfoSize(animationInfoSize);
-            ContentPanel.getContentPanel().revalidate(); //使组件失效，并重新计算布局绘制组件
+            deleteEntry();
             Dao.addAnimationForWatched(EntryPanel.getAnimeName(EntryPanel.instance), EntryPanel.getAnimeAmount(EntryPanel.instance), EntryPanel.getWatchedDate(EntryPanel.instance));
             dispose();
         } else if (COMMAND_CANCEL_BUTTON.equals(e.getActionCommand())) {
