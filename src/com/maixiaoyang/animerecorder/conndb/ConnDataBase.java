@@ -6,7 +6,7 @@ import java.sql.*;
  * 小肥羊追番神器数据库连接
  * @author maixiaoyang
  */
-public class ConnDB {
+public class ConnDataBase {
 
     /** 数据库驱动 */
     private static String dbClassName = "com.mysql.jdbc.Driver";

@@ -45,7 +45,7 @@ public class ContentPanel extends JPanel {
         addAnimeButton.setForeground(Color.WHITE);
         addAnimeButton.setBounds(10, animationInfoSize * 50 + 10, 100, 40);
         addAnimeButton.setFont(new Font("楷体", Font.BOLD, 25));
-        addAnimeButton.addActionListener(e -> new MyDialog(MainUI.getFrame(), MyDialog.TYPE_ONE).setVisible(true));
+        addAnimeButton.addActionListener(e -> new MyDialog(MainFrame.getFrame(), MyDialog.TYPE_ONE).setVisible(true));
         ContentPanel.instance.add(addAnimeButton);
     }
 

@@ -185,14 +185,14 @@ public class EntryPanel extends JPanel implements ActionListener {
 
     private void addDeleteIcon() {
         deleteIcon = new JLabel();
-        URL imgUrl = MainUI.class.getResource("images/delete_button.png");
+        URL imgUrl = MainFrame.class.getResource("images/delete_button.png");
         ImageIcon icon = new ImageIcon(imgUrl);
         deleteIcon.setIcon(icon);
         deleteIcon.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 instance = getInstance();
-                new MyDialog(MainUI.getFrame(), MyDialog.TYPE_TWO).setVisible(true);
+                new MyDialog(MainFrame.getFrame(), MyDialog.TYPE_TWO).setVisible(true);
             }
         });
         add(deleteIcon);
@@ -200,14 +200,14 @@ public class EntryPanel extends JPanel implements ActionListener {
 
     private void addCompleteIcon() {
         completeIcon = new JLabel();
-        URL imgUrl = MainUI.class.getResource("images/complete_button.png");
+        URL imgUrl = MainFrame.class.getResource("images/complete_button.png");
         ImageIcon icon = new ImageIcon(imgUrl);
         completeIcon.setIcon(icon);
         completeIcon.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 instance = getInstance();
-                new MyDialog(MainUI.getFrame(), MyDialog.TYPE_THREE).setVisible(true);
+                new MyDialog(MainFrame.getFrame(), MyDialog.TYPE_THREE).setVisible(true);
             }
         });
         add(completeIcon);

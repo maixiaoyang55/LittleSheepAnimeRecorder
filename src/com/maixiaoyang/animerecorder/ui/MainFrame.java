@@ -6,14 +6,16 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 
 
 /**
  * 小肥羊追番神器主要视图框架
  * @author maixiaoyang
  */
-public class MainUI extends JFrame {
+public class MainFrame extends JFrame {
 
     private static final int WIDTH = 1100;
     private static final int HEIGHT = 750;
@@ -32,7 +34,7 @@ public class MainUI extends JFrame {
         screenHeight = (int) screenSize.getHeight();
     }
 
-    public MainUI() {
+    public MainFrame() {
         Container c = getContentPane();
         //禁止用户自由改变窗口大小
         setResizable(false);
@@ -86,9 +88,9 @@ public class MainUI extends JFrame {
     }
 
     public static void main(String[] args) {
-        MainUI mainUI = new MainUI();
-        mainUI.init();
-        mainUI.setVisible(true);
+        MainFrame mainFrame = new MainFrame();
+        mainFrame.init();
+        mainFrame.setVisible(true);
         WeekButtonPanel.getFocus(Dao.dayOfWeek());
     }
 
@@ -97,6 +99,8 @@ public class MainUI extends JFrame {
         addMiniButton();
         addTrashIcon();
         Dao.loadAnimation();
+
+        Dao.restore();
     }
 
     public static JFrame getFrame() {
@@ -109,7 +113,7 @@ public class MainUI extends JFrame {
         miniButton.setBorderPainted(false);
         miniButton.setFocusPainted(false);
         miniButton.setContentAreaFilled(false);
-        URL imaUrl = MainUI.class.getResource("images/mini_button.png");
+        URL imaUrl = MainFrame.class.getResource("images/mini_button.png");
         ImageIcon icon = new ImageIcon(imaUrl);
         miniButton.addActionListener(e -> setExtendedState(JFrame.ICONIFIED));
         miniButton.setIcon(icon);
@@ -122,16 +126,24 @@ public class MainUI extends JFrame {
         closeButton.setBorderPainted(false);
         closeButton.setFocusPainted(false);
         closeButton.setContentAreaFilled(false);
-        URL imaUrl = MainUI.class.getResource("images/close_button.png");
+        URL imaUrl = MainFrame.class.getResource("images/close_button.png");
         ImageIcon icon = new ImageIcon(imaUrl);
-        closeButton.addActionListener(e -> System.exit(0));
+        closeButton.addActionListener(e ->{
+
+            try {
+                Dao.backup();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+
+            System.exit(0);});
         closeButton.setIcon(icon);
         add(closeButton);
     }
 
     public void addTrashIcon() {
         JLabel trashIcon = new JLabel();
-        URL imgUrl = MainUI.class.getResource("images/trash_icon.png");
+        URL imgUrl = MainFrame.class.getResource("images/trash_icon.png");
         ImageIcon icon = new ImageIcon(imgUrl);
         trashIcon.setIcon(icon);
         trashIcon.setBounds(310, 13, 30, 30);
@@ -143,7 +155,7 @@ public class MainUI extends JFrame {
         super.paint(g);
         Graphics2D g2 = (Graphics2D) g;
 
-        URL imgUrl = MainUI.class.getResource("images/bg01.png");
+        URL imgUrl = MainFrame.class.getResource("images/bg01.png");
         //获取图片路径
         img = Toolkit.getDefaultToolkit().getImage(imgUrl);
         //绘制图片
